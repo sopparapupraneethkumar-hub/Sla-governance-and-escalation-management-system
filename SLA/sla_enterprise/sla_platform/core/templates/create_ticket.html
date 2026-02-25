@@ -1,0 +1,73 @@
+{% extends "base_client.html" %}
+{% block title %}Client | Create Ticket{% endblock %}
+{% block page_title %}Create Ticket{% endblock %}
+{% block page_subtitle %}Auto-routing + load-balanced engineer assignment{% endblock %}
+
+{% block content %}
+<div class="grid">
+  <div class="card col-8">
+    <div style="font-weight:950; font-size:16px;"> Raise a New SLA Ticket</div>
+    <div class="small">Fill the form — the system will auto-assign the best engineer.</div>
+
+    <div style="height:14px;"></div>
+
+    <form method="POST" action="{% url 'create_ticket' %}">
+      {% csrf_token %}
+
+      <label class="label">Category</label>
+      <select class="select" name="category" required>
+        <option value="" selected disabled>Select category</option>
+        <option value="NETWORK">Network Operations</option>
+        <option value="CLOUD">Cloud Infrastructure</option>
+        <option value="SERVER">Server Administration</option>
+        <option value="DATABASE">Database Administration</option>
+        <option value="DEVOPS">DevOps</option>
+        <option value="CYBER">Cybersecurity</option>
+        <option value="RISK">Risk & Compliance</option>
+        <option value="APP">Application Support</option>
+        <option value="AI">AI/ML Operations</option>
+        <option value="DATA">Data Engineering</option>
+        <option value="SRE">SRE</option>
+        <option value="INCIDENT">Incident Response</option>
+      </select>
+
+      <div style="height:12px;"></div>
+
+      <label class="label">Priority</label>
+      <select class="select" name="priority" required>
+        <option value="" selected disabled>Select priority</option>
+        <option value="CRITICAL">Critical</option>
+        <option value="HIGH">High</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="LOW">Low</option>
+      </select>
+
+      <div style="height:12px;"></div>
+
+      <label class="label">Issue Description</label>
+      <textarea class="textarea" name="description" required placeholder="Explain your issue clearly (what happened, when, impact, screenshots if any)..."></textarea>
+
+      <div style="height:14px;"></div>
+
+      <button class="btn" type="submit"> Create Ticket</button>
+      <a class="btn secondary" href="{% url 'client_dashboard' %}">Cancel</a>
+    </form>
+  </div>
+
+  <div class="card col-4">
+    <div style="font-weight:950;"> Smart Tips (Client)</div>
+    <div class="small" style="margin-top:10px;">
+      • Select correct <b>Category</b> so ticket goes to correct department.<br/>
+      • Choose priority carefully — SLA resolution time depends on it.<br/>
+      • Detailed description helps engineer resolve faster.<br/>
+      • After resolved, you can <b>Reopen</b> if issue returns.
+    </div>
+
+    <hr class="sep">
+
+    <div class="small">
+      This project supports: <b>Risk scoring</b>, <b>Escalation</b>, <b>Breach detection</b>, and <b>Audit logs</b>.
+    </div>
+  </div>
+</div>
+{% endblock %}

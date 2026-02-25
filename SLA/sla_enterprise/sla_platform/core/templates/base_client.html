@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>{% block title %}Client | SLA Enterprise{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+  <script defer src="{% static 'core/js/app.js' %}"></script>
+</head>
+
+<!-- ✅ Light theme for all dashboards - consistent across Client/Engineer/Admin -->
+<body class="app-theme-light">
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">C</div>
+        <div>
+          <div class="brand-title">My Portal</div>
+          <div class="brand-sub">Raise & Track SLA Tickets</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item" href="{% url 'client_dashboard' %}"> My Dashboard</a>
+        <a class="nav-item" href="{% url 'create_ticket' %}"> Create Ticket</a>
+        <a class="nav-item" href="{% url 'dashboard' %}"> Main Dashboard</a>
+        <a class="nav-item" href="{% url 'logout' %}"> Logout</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        Tip: choose correct <b>Category</b> so the ticket goes to correct department.
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="top-left">
+          <button class="icon-btn" id="toggleSidebar" type="button" aria-label="Toggle sidebar">☰</button>
+
+          <div class="page-title">
+            {% block page_title %}My Portal{% endblock %}
+            <div class="page-subtitle">{% block page_subtitle %}Fast support with SLA tracking{% endblock %}</div>
+          </div>
+        </div>
+
+        <div class="top-right">
+          <div class="chip"><span class="dot"></span><span>Support Online</span></div>
+
+          <button class="avatar avatar-btn" id="profileBtn" type="button" aria-haspopup="true" aria-expanded="false" title="{{ request.user.username }}">
+            {{ request.user.username|slice:":1"|upper }}
+          </button>
+
+          <div class="profile-menu" id="profileMenu" aria-hidden="true">
+            <div class="profile-head">
+              <div class="profile-avatar">{{ request.user.username|slice:":1"|upper }}</div>
+              <div>
+                <div class="profile-name">{{ request.user.username }}</div>
+                <div class="profile-email">
+                  {% if request.user.email %}{{ request.user.email }}{% else %}No email set{% endif %}
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              <a class="profile-link" href="{% url 'password_change' %}"> Change Password</a>
+              <a class="profile-link danger" href="{% url 'logout' %}"> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="content">
+        {% block content %}{% endblock %}
+      </section>
+    </main>
+  </div>
+</body>
+</html>
